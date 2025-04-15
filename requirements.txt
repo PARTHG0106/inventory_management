@@ -1,0 +1,45 @@
+# Core Django
+Django==4.2.10
+djangorestframework==3.14.0
+Pillow==10.2.0
+python-dotenv==1.0.1
+
+# Forms and UI
+django-crispy-forms==2.1
+crispy-bootstrap5==2023.10
+django-filter==23.5
+django-widget-tweaks==1.5.0
+
+# Background Tasks
+celery==5.3.6
+django-celery-beat==2.5.0
+redis==5.0.1
+
+# File Handling
+django-cleanup==9.0.0
+django-import-export==3.3.4
+
+# QR and Barcode
+python-barcode==0.15.1
+qrcode[pil]==7.4.2
+
+# Authentication and Notifications
+django-allauth==0.58.2
+django-notifications-hq==1.8.3
+
+# Development Tools
+django-debug-toolbar==4.2.0
+setuptools==69.0.3  # Required for distutils
+
+# Database
+psycopg2-binary==2.9.9
+
+# Production
+gunicorn==21.2.0
+whitenoise==6.6.0
+
+# Additional Utilities
+python-dateutil==2.8.2
+reportlab==4.0.9  # For PDF generation
+openpyxl==3.1.2  # For Excel export
+django-celery-results==2.5.1 

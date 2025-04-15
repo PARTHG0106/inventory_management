@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Order #{{ order.id }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Order #{{ order.id }}</h1>
+        <div>
+            {% if order.status != 'completed' and order.status != 'cancelled' %}
+            <form method="post" action="{% url 'orders:order_complete' order.pk %}" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check"></i> Complete Order
+                </button>
+            </form>
+            <form method="post" action="{% url 'orders:order_cancel' order.pk %}" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning">
+                    <i class="fas fa-times"></i> Cancel Order
+                </button>
+            </form>
+            {% endif %}
+            <a href="{% url 'orders:order_update' order.pk %}" class="btn btn-primary">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            <a href="{% url 'orders:order_delete' order.pk %}" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Delete
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Order Information</h6>
+                </div>
+                <div class="card-body">
+                    <p><strong>Customer:</strong> {{ order.customer.name }}</p>
+                    <p><strong>Status:</strong> 
+                        <span class="badge {% if order.status == 'pending' %}bg-warning{% elif order.status == 'completed' %}bg-success{% else %}bg-danger{% endif %}">
+                            {{ order.get_status_display }}
+                        </span>
+                    </p>
+                    <p><strong>Created:</strong> {{ order.created_at }}</p>
+                    <p><strong>Last Updated:</strong> {{ order.updated_at }}</p>
+                    <p><strong>Notes:</strong> {{ order.notes }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Order Items</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order.items.all %}
+                                <tr>
+                                    <td>{{ item.product.name }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>${{ item.price }}</td>
+                                    <td>${{ item.total }}</td>
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td colspan="3" class="text-right"><strong>Total:</strong></td>
+                                    <td><strong>${{ order.total }}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

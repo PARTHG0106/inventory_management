@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ supplier.name }} - Supplier Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2>{{ supplier.name }}</h2>
+                </div>
+                <div class="card-body">
+                    <p><strong>Email:</strong> {{ supplier.email }}</p>
+                    <p><strong>Phone:</strong> {{ supplier.phone }}</p>
+                    <p><strong>Address:</strong> {{ supplier.address }}</p>
+                    <p><strong>City:</strong> {{ supplier.city }}</p>
+                    <p><strong>State:</strong> {{ supplier.state }}</p>
+                    <p><strong>Country:</strong> {{ supplier.country }}</p>
+                    <p><strong>Postal Code:</strong> {{ supplier.postal_code }}</p>
+                    {% if supplier.tax_id %}
+                        <p><strong>Tax ID:</strong> {{ supplier.tax_id }}</p>
+                    {% endif %}
+                    {% if supplier.website %}
+                        <p><strong>Website:</strong> <a href="{{ supplier.website }}" target="_blank">{{ supplier.website }}</a></p>
+                    {% endif %}
+                    {% if supplier.notes %}
+                        <p><strong>Notes:</strong> {{ supplier.notes }}</p>
+                    {% endif %}
+                    <p><strong>Status:</strong> {% if supplier.is_active %}Active{% else %}Inactive{% endif %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
